@@ -5,10 +5,10 @@ from Utils.time_stamp import timeit  # decorator to get elapsed time
 from Utils.animation import CursorAnimation  # animated waiting cursor
 from colorama import init, Fore  # colors to Windows Command Prompt
 
-init(autoreset=True)  # inicialize Windows Command Prompt
+init(autoreset=True)  # start Windows Command Prompt
 
 
-class db_conn:
+class DbConn:
     """
     Class to establish connection to the database server to
     retrieve information.
@@ -22,21 +22,23 @@ class db_conn:
         self.db_name = config['ERP_SERVER']['database']  # assign db name
         self.user_name = config['ERP_SERVER']['uid']  # assign user name
         self.pwd = config['ERP_SERVER']['pwd']  # assign password
+        self.conn = None
 
     def connect(self):
         """
         Method to establish connection to the server
         """
+        conn = None
         try:
             print(Fore.YELLOW +
                   'Establishing connection with {}'.format(self.server_name))
             # timeout only of the connection, not of the SQL query
-            self.conn = pyodbc.connect(Driver='SQL Server',
-                                       Server=self.server_name,
-                                       Database=self.db_name,
-                                       uid=self.user_name,
-                                       pwd=self.pwd,
-                                       timeout=3)
+            conn = pyodbc.connect(Driver='SQL Server',
+                                  Server=self.server_name,
+                                  Database=self.db_name,
+                                  uid=self.user_name,
+                                  pwd=self.pwd,
+                                  timeout=3)
             print(Fore.GREEN + 'Connection done!')
         except pyodbc.Error as ex:
             sqlstate = ex.args[0]
@@ -50,10 +52,11 @@ class db_conn:
                 print('Time Error: Time Limit Exceed. Try again')
             else:
                 print(ex.args)
+        return conn
 
     def close(self):
         """
-        Close the connection to the batabase
+        Close the connection to the database
         """
         self.conn.close()
 
@@ -61,18 +64,18 @@ class db_conn:
     def read_sql_file(filename):
         """read a SQL Script file and pass it as a string"""
         fd = open('SQL/' + filename + '.sql', 'r', encoding='utf-8')
-        sqlFile = fd.read()
+        sql_file = fd.read()
         fd.close()
-        return sqlFile
+        return sql_file
 
     @timeit
-    def sql_todf(self, sql_file, action=False):
+    def sql_to_df(self, sql_file, action=False):
         """
         Gets data from the SQL server and return the result as a dataframe
         """
         print(Fore.YELLOW + 'Fetching data from {}...'.format(self.db_name))
-        if action is True:
-            animation = CursorAnimation()  # Load Cursor
+        animation = CursorAnimation()  # Load Cursor
+        if action:
             animation.start()  # Start Animation
         # fetch data from server
         df = pd.read_sql(self.read_sql_file(sql_file),
@@ -89,8 +92,8 @@ class db_conn:
         It is used to fetch minimal information from de database.
         """
         print(Fore.YELLOW + 'Fetching data from {}...'.format(self.db_name))
+        animation = CursorAnimation()  # Load Cursor
         if action is True:
-            animation = CursorAnimation()  # Load Cursor
             animation.start()  # Start Animation
         cur = self.conn.cursor()  # create cursor, required for connection
         cur.execute(self.read_sql_file(sql_file))  # query db
