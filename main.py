@@ -10,9 +10,9 @@ import pandas as pd  # import pandas dataframe
 from Utils.animation import CursorAnimation  # animated waiting cursor
 
 
-db_data = DbConn('ENDICON_DATA')
+db_data = DbConn('app_config.ini', 'ERP_SERVER')
 db_data.connect()
-df = db_data.sql_to_df('Pré-notas', action=True)
+df = db_data.sql_to_df('invoices', action=True)
 db_data.close()
 
 print('saving file...')

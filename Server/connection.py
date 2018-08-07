@@ -15,30 +15,31 @@ class DbConn:
     Gets parameters from app_config.ini file and initiate the class.
     """
 
-    def __init__(self, string_connection):
+    def __init__(self, config_file, server_name):
         config = configparser.ConfigParser()
-        config.read('app_config.ini')  # get values from INI File
-        self.server_name = config['ERP_SERVER']['server']  # assign server name
-        self.db_name = config['ERP_SERVER']['database']  # assign db name
-        self.user_name = config['ERP_SERVER']['uid']  # assign user name
-        self.pwd = config['ERP_SERVER']['pwd']  # assign password
+        config.read(config_file)  # get values from INI File
+
+        self.server_name = config[server_name]['server']  # assign server name
+        self.db_name = config[server_name]['database']  # assign db name
+        self.user_name = config[server_name]['uid']  # assign user name
+        self.pwd = config[server_name]['pwd']  # assign password
         self.conn = None
 
+    # noinspection PyArgumentList
     def connect(self):
         """
         Method to establish connection to the server
         """
-        conn = None
         try:
             print(Fore.YELLOW +
                   'Establishing connection with {}'.format(self.server_name))
             # timeout only of the connection, not of the SQL query
-            conn = pyodbc.connect(Driver='SQL Server',
-                                  Server=self.server_name,
-                                  Database=self.db_name,
-                                  uid=self.user_name,
-                                  pwd=self.pwd,
-                                  timeout=3)
+            self.conn = pyodbc.connect(Driver='SQL Server',
+                                       Server=self.server_name,
+                                       Database=self.db_name,
+                                       uid=self.user_name,
+                                       pwd=self.pwd,
+                                       timeout=3)
             print(Fore.GREEN + 'Connection done!')
         except pyodbc.Error as ex:
             sqlstate = ex.args[0]
@@ -52,7 +53,6 @@ class DbConn:
                 print('Time Error: Time Limit Exceed. Try again')
             else:
                 print(ex.args)
-        return conn
 
     def close(self):
         """
