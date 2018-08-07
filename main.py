@@ -12,7 +12,7 @@ from Utils.animation import CursorAnimation  # animated waiting cursor
 
 db_data = DbConn('app_config.ini', 'ERP_SERVER')
 db_data.connect()
-df = db_data.sql_to_df('invoices', action=True)
+df = db_data.sql_to_df('test', action=True)
 db_data.close()
 
 print('saving file...')
@@ -21,7 +21,7 @@ animation = CursorAnimation()  # Load Cursor
 animation.start()  # Start Animation
 
 writer = pd.ExcelWriter('output.xlsx')
-df.to_excel(writer, 'dados')
+df.to_excel(writer, 'data')
 writer.save()
 
 animation.stop()  # Stop Animation
