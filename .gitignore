@@ -1,6 +1,5 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
 *$py.class
 
 # C extensions
@@ -60,3 +59,4 @@ target/
 # Personal files
 Demos/
 /output.xlsx
+.idea/
