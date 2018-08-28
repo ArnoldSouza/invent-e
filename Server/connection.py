@@ -26,7 +26,7 @@ class DbConn:
         self.conn = None
 
     # noinspection PyArgumentList
-    def connect(self):
+    def connect_db(self):
         """
         Method to establish connection to the server
         """
@@ -54,7 +54,7 @@ class DbConn:
             else:
                 print(ex.args)
 
-    def close(self):
+    def close_db(self):
         """
         Close the connection to the database
         """
@@ -86,7 +86,7 @@ class DbConn:
         return df
 
     @timeit
-    def sql_tostring(self, sql_file, action=False):
+    def sql_to_string(self, sql_file, action=False):
         """
         Gets just one value from a table and return it as a string.
         It is used to fetch minimal information from de database.

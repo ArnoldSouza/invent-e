@@ -2,7 +2,7 @@ from threading import Thread  # threading module for cursor animation
 from time import sleep  # necessary for cursor animation
 from colorama import init, Fore  # colors to Windows Command Prompt
 
-init(autoreset=True)  # inicialize Windows Command Prompt
+init(autoreset=True)  # init Windows Command Prompt
 
 
 # Cursor animation taken from:

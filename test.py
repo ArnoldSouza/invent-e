@@ -42,7 +42,7 @@ complements = fc.get_complements(conn,
                                  'last_stock')
 
 # close the database connection
-conn.close()
+conn.close_db()
 
 # add the recalculation of Stock Level Column
 df = fc.cumulative_inverse_sum(df, complements['last_stock'])

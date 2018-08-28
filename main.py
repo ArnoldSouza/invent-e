@@ -11,9 +11,9 @@ from Utils.animation import CursorAnimation  # animated waiting cursor
 
 
 db_data = DbConn('app_config.ini', 'ERP_SERVER')
-db_data.connect()
-df = db_data.sql_to_df('test', action=True)
-db_data.close()
+db_data.connect_db()
+df = db_data.sql_to_df('invoices', action=True)
+db_data.close_db()
 
 print('saving file...')
 
