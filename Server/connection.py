@@ -4,6 +4,7 @@ import pandas as pd  # import lib to make a dataframe
 from Utils.time_stamp import timeit  # decorator to get elapsed time
 from Utils.animation import CursorAnimation  # animated waiting cursor
 from colorama import init, Fore  # colors to Windows Command Prompt
+from Pretty.prompt import check_parameters  # get input data from the user
 
 init(autoreset=True)  # start Windows Command Prompt
 
@@ -61,11 +62,16 @@ class DbConn:
         self.conn.close()
 
     @staticmethod
-    def read_sql_file(filename):
-        """read a SQL Script file and pass it as a string"""
+    def read_sql_file(filename, dict_answers=None):
+        """read a SQL Script file and pass it as a string
+        :param filename: name of the SQL Script file
+        :param dict_answers: dictionary of answers to put in the string, if given
+        :return: SQL Script if parameters populated
+        """
         fd = open('SQL/' + filename + '.sql', 'r', encoding='utf-8')
         sql_file = fd.read()
         fd.close()
+        sql_file = check_parameters(sql_file, dict_answers)
         return sql_file
 
     @timeit

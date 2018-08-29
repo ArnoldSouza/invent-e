@@ -11,65 +11,6 @@ Created on Fri May 18 16:54:03 2018
 # e.g. print(Fore.YELLOW + 'some message')
 
 
-def get_params(*args):
-    """get variables parameters to a SQL Script"""
-    param = {}
-    print('-'*79)  # line delimiter
-    for arg in args:
-        if arg == 'filial':
-            answer = get_input(msg='Insert subsidiary code:',
-                               lenght=2,
-                               type_val='numeric')
-            param[arg] = "'{}'".format(answer)
-        elif arg == 'armazem':
-            answer = get_input(msg='Insert warehouse code:',
-                               lenght=2,
-                               type_val='numeric')
-            param[arg] = "'{}'".format(answer)
-        elif arg == 'codigo':
-            answer = get_input(msg='Insert product code:',
-                               lenght=8,
-                               type_val='numeric')
-            param[arg] = "'{}'".format(answer)
-        elif arg == 'intervalo':
-            answer = get_input(msg='Insert range [days]',
-                               lenght=None,
-                               type_val='numeric',
-                               convert='int',
-                               defalt='365')
-            param[arg] = answer*-1
-    print('\n', '-'*79, '\n', sep='')  # line delimiter
-    return param
-
-
-def get_input(msg, lenght, type_val, convert=None, defalt=None):
-    """certifies a proper answer to parameters"""
-    if defalt is not None:  # attach defalt value if exists
-        value = input(msg + '[defalt: ' + str(defalt) + ']:')
-        if value == '':
-            value = defalt
-    else:
-        value = input(msg)  # get input
-    value = value.strip()  # leave spaces behind
-    value = value.lower()  # all letters lower case
-    if value == '':
-        raise Exception('String must to have lenght')
-    if lenght is not None:  # numeric values doesn't have lenght
-        if len(value) != lenght:
-            raise Exception('String out of lenght. Limit: {}, Current: {}.'
-                            .format(lenght, len(value)))
-    if type_val == 'numeric':
-        if value.isnumeric() is not True:
-            raise Exception('String is not only numeric')
-    elif type_val == 'alphabets':
-        if value.isalpha() is not True:
-            raise Exception('String is not only alphabets')
-    if convert is not None:  # convert the value of the input
-        if convert == 'int':
-            value = int(value)
-    return value
-
-
 def get_complements(conn, parameters, *args):
     """get the more information about some details"""
     answer = {}

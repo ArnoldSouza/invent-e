@@ -8,6 +8,7 @@ pyodbc = "*"
 pandas = "*"
 colorama = "*"
 pytest = "*"
+clint = "*"
 
 [dev-packages]
 
