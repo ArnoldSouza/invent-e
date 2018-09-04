@@ -17,17 +17,21 @@ def check_parameters(text_sql, dict_answers=None):
     Function to check if a given string has parameters inside
     :param text_sql: string of SQL script
     :param dict_answers: dictonary of answers to the existing parameters in the string
-    :return: list of parameters if exists
+    :return: SQL script formatted and the dict of parameters
     """
     list_parameters = extract_keywords(text_sql)
 
+    if dict_answers is None:
+        dict_answers = {}
+
     if not list_parameters:  # if no param, return the given string
-        return text_sql
-    else:  # ask the user to input data
-        if dict_answers:
-            return text_sql.format(**dict_answers)  # substitute the parameters inside the string
-        else:
-            return _get_param(list_parameters, text_sql)  # look for user input
+        return text_sql, dict_answers
+    else:
+        if dict_answers:  # format the string with parameters presented
+            return text_sql.format(**dict_answers), dict_answers
+        else:  # ask the user to input data
+            sql, params = _get_param(list_parameters, text_sql)
+            return sql, params
 
 
 def _get_param(list_parameters, text_sql):
@@ -36,7 +40,7 @@ def _get_param(list_parameters, text_sql):
 
     :param list_parameters: parameters of the SQL String
     :param text_sql: the given SQL String
-    :return: the SQL String with the parameters values inside
+    :return: the SQL String with the parameters values inside and a dict of parameters
     """
     length = len(list_parameters)
     puts(colored.yellow(f'Found {length} parameters in the SQL that need input:'))
@@ -45,9 +49,9 @@ def _get_param(list_parameters, text_sql):
 
     answers = {}
     for param in list_parameters:  # iterate over params to get inputs
-        answers[param] = _prompt_param(param)
+        answers[param] = prompt_param(param)
     text_sql = text_sql.format(**answers)  # substitute the parameters inside the string
-    return text_sql
+    return text_sql, answers
 
 
 class _InputValidator(object):
@@ -82,7 +86,7 @@ def _greater_than(value, number):
         raise ValueError
 
 
-def _prompt_param(param):
+def prompt_param(param):
     """
     prompt to the user the parameters to input
     :param param: list of parameters
