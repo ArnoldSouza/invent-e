@@ -118,7 +118,36 @@ def prompt_param(param):
                                                           30)],
                               batch=False)
         answer = int(answer)*-1
+    elif param in ['driver', 'server', 'database', 'uid', 'pwd']:  # input for the ini file of the app, if necessary
+        example = 'no example presented'
+        if param == 'driver':
+            example = 'SQL Server'
+        elif param == 'server':
+            example = 'db.domain.com'
+        elif param == 'database':
+            example = 'the database used in the company'
+        elif param == 'uid':
+            example = 'user identification'
+        elif param == 'pwd':
+            example = 'password'
+
+        msg = f"The parameter [{param}] has no defalt value (Its's only needed to provide once)"
+        print(msg, f'example >> {example}', sep='\n')
+        answer = prompt.query(f'Insert a value to -> {param}:')
     else:
         answer = prompt.query(f'[UNKNOWN PARAMETER] Insert a value to -> {param}:')
         answer = f"'{answer}'"  # puts result in single quotes because of SQL interpreter
     return answer
+
+
+def check_ini_file(file_name, config_file, section, key):
+    try:
+        value = config_file[section][key]
+        if not value:
+            raise KeyError
+    except KeyError:
+        value = prompt_param(key)
+        config_file[section][key] = value
+        with open(file_name, 'w') as configfile:
+            config_file.write(configfile)
+    return value

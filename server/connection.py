@@ -4,7 +4,7 @@ import pandas as pd  # import lib to make a dataframe
 from utils.time_stamp import timeit  # decorator to get elapsed time
 from utils.animation import CursorAnimation  # animated waiting cursor
 from colorama import init, Fore  # colors to Windows Command Prompt
-from utils.prompt import check_parameters, prompt_param  # get input data from the user
+from utils.prompt import check_parameters, prompt_param, check_ini_file  # get input data from the user
 
 init(autoreset=True)  # start Windows Command Prompt
 
@@ -20,10 +20,10 @@ class DbConn:
         config = configparser.ConfigParser()
         config.read(config_file)  # get values from INI File
 
-        self.server_name = config[server_name]['server']  # assign server name
-        self.db_name = config[server_name]['database']  # assign db name
-        self.user_name = config[server_name]['uid']  # assign user name
-        self.pwd = config[server_name]['pwd']  # assign password
+        self.server_name = check_ini_file(config_file, config, server_name, 'server')  # assign server name
+        self.db_name = check_ini_file(config_file, config, server_name, 'database')  # assign db name
+        self.user_name = check_ini_file(config_file, config, server_name, 'uid')  # assign user name
+        self.pwd = check_ini_file(config_file, config, server_name, 'pwd')  # assign password
         self.conn = None
 
     # noinspection PyArgumentList
