@@ -119,11 +119,11 @@ class DbConn:
     # TODO clear and adjust this function
     def get_complements(self, parameters, *args):
         """
-        Sometimes the information presented in the dataframe is not enought to properly present it to the user.
+        Sometimes the information presented in the dataframe is not enough to properly present it to the user.
         One example is when it's necessary to show both the SKU and the NAME of a product. So it's necessary to
         query the NAME given the SKU and return the NAME to use it. That's the intention of this method.
         :param parameters: Parameters to narrow the query of complements
-        :param args: The info you want as a complemet of information
+        :param args: The info you want as a complement of information
         :return: String with the info
         """
         def properly_answer(key_string, given_answer, result_string, print_msg=True, message=None, assign_value=None):
@@ -134,7 +134,7 @@ class DbConn:
             :param result_string: The result of the past query
             :param print_msg: Whether to print or not the message
             :param message: Message to be printed
-            :param assign_value: If result_string is None, the value to be assignned
+            :param assign_value: If result_string is None, the value to be assigned
             """
             flag = False
             if result_string is None:
@@ -152,18 +152,18 @@ class DbConn:
                     print(key_string, '->', given_answer[arg])
             return given_answer
 
-        def get_info(dictonary, key):
+        def get_info(dictionary, key):
             """
             Check if a key is in the parameters' dictionary. If not, prompt to user input this information
-            :param dictonary: the parameters dict
+            :param dictionary: the parameters dict
             :param key: a specific key
-            :return: the dictonary of parameters updated
+            :return: the dictionary of parameters updated
             """
-            if key not in dictonary:
+            if key not in dictionary:
                 value = prompt_param(key)
-                dictonary[key] = value
+                dictionary[key] = value
             else:
-                value = dictonary[key]
+                value = dictionary[key]
             return value
 
         answer = {}

@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pyodbc = "*"
 pandas = "*"
 colorama = "*"
-pytest = "*"
 clint = "*"
+pyodbc = "*"
+xlsxwriter = "*"
 
 [dev-packages]
 

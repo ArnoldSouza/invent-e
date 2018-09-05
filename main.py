@@ -24,8 +24,8 @@ print('saving file...')
 animation = CursorAnimation()  # Load Cursor
 animation.start()  # Start Animation
 
-writer = pd.ExcelWriter('output.xlsx')
-df.to_excel(writer, 'data')
+writer = pd.ExcelWriter('output.xlsx', engine='xlsxwriter')
+df.to_excel(writer, sheet_name='data')
 writer.save()
 
 animation.stop()  # Stop Animation

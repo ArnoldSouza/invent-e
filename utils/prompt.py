@@ -16,7 +16,7 @@ def check_parameters(text_sql, dict_answers=None):
     """
     Function to check if a given string has parameters inside
     :param text_sql: string of SQL script
-    :param dict_answers: dictonary of answers to the existing parameters in the string
+    :param dict_answers: dictionary of answers to the existing parameters in the string
     :return: SQL script formatted and the dict of parameters
     """
     list_parameters = extract_keywords(text_sql)
@@ -36,7 +36,7 @@ def check_parameters(text_sql, dict_answers=None):
 
 def _get_param(list_parameters, text_sql):
     """
-    uses clint lib to ask the user to input data. This fuction assumes no Null arguments
+    uses clint lib to ask the user to input data. This function assumes no Null arguments
 
     :param list_parameters: parameters of the SQL String
     :param text_sql: the given SQL String
@@ -76,7 +76,7 @@ class _InputValidator(object):
 def _greater_than(value, number):
     """
     check if a value satisfy a condition to a number
-    :param value: value to be analised, provided by __call__
+    :param value: value to be analysed, provided by __call__
     :param number: number to compare
     :return: either the value or an error
     """
@@ -131,7 +131,7 @@ def prompt_param(param):
         elif param == 'pwd':
             example = 'password'
 
-        msg = f"The parameter [{param}] has no defalt value (Its's only needed to provide once)"
+        msg = f"The parameter [{param}] has no default value (Its's only needed to provide once)"
         print(msg, f'example >> {example}', sep='\n')
         answer = prompt.query(f'Insert a value to -> {param}:')
     else:
