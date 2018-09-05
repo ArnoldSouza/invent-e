@@ -17,4 +17,5 @@ uid = user identification
 pwd = password
 ````
 
+After that, just click in `run_app.bat`  
 Author: Arnold Souza (arnoldporto@gmail.com), 2018
