@@ -2,7 +2,7 @@
 
 A python app to help manage inventory in TOTVS ERP
 
-####Setup the project:
+#### Setup the project:
 
 To properly setup, it's necessary to create a INI 
 file named `app_config.ini` with structure like 
