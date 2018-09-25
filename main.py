@@ -19,6 +19,7 @@ complements = db_data.get_complements(parameters,
                                       'last_stock')
 db_data.close_db()
 
+
 print('saving file...')
 
 animation = CursorAnimation()  # Load Cursor

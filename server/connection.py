@@ -3,8 +3,8 @@ import pyodbc  # module to establish SQL connection
 import pandas as pd  # import lib to make a dataframe
 from utils.time_stamp import timeit  # decorator to get elapsed time
 from utils.animation import CursorAnimation  # animated waiting cursor
-from colorama import init, Fore  # colors to Windows Command Prompt
 from utils.prompt import check_parameters, prompt_param, check_ini_file  # get input data from the user
+from colorama import init, Fore  # colors to Windows Command Prompt
 
 init(autoreset=True)  # start Windows Command Prompt
 
@@ -77,13 +77,15 @@ class DbConn:
         return sql_file, parameters
 
     @timeit
-    def sql_to_df(self, sql_file, action=False):
+    def sql_to_df(self, sql_file, action=False, dict_answers=None):
         """
         Gets data from the SQL server and return the result as a dataframe
         and a list of parameters, if exists
         """
         print(Fore.YELLOW + 'Fetching data from {}...'.format(self.db_name))
-        sql, parameters = self.read_sql_file(sql_file)
+        if dict_answers is None:
+            dict_answers = {}
+        sql, parameters = self.read_sql_file(sql_file, dict_answers)
         animation = CursorAnimation()  # Load Cursor
         if action:
             animation.start()  # Start Animation

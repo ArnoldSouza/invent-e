@@ -26,12 +26,24 @@ def check_parameters(text_sql, dict_answers=None):
 
     if not list_parameters:  # if no param, return the given string
         return text_sql, dict_answers
-    else:
-        if dict_answers:  # format the string with parameters presented
+    else:  # if it has parameters
+        if dict_answers:  # if dict_answers has length, it means it has some  answers
+            # check if it has answers enough. If not, prompt to fill in
+            dict_answers = _check_enough_answers(list_parameters, dict_answers)
+            # format the string with parameters presented
             return text_sql.format(**dict_answers), dict_answers
-        else:  # ask the user to input data
+        else:  # dict has no answers at all
+            # ask the user to input data
             sql, params = _get_param(list_parameters, text_sql)
             return sql, params
+
+
+def _check_enough_answers(list_parameters, dict_answers):
+    key_answers_list = list(dict_answers.keys())
+    for value in list_parameters:
+        if value not in key_answers_list:
+            dict_answers[value] = prompt_param(value)
+    return dict_answers
 
 
 def _get_param(list_parameters, text_sql):
