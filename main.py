@@ -12,7 +12,7 @@ from utils.animation import CursorAnimation  # animated waiting cursor
 
 db_data = DbConn('app_config.ini', 'ERP_SERVER')
 db_data.connect_db()
-df, parameters = db_data.sql_to_df('DATAFRAME', action=True)
+df, parameters = db_data.sql_to_df('sql_movigrama', action=True)
 complements = db_data.get_complements(parameters,
                                       'product',
                                       'warehouse',

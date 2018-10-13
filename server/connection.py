@@ -9,6 +9,7 @@ from colorama import init, Fore  # colors to Windows Command Prompt
 init(autoreset=True)  # start Windows Command Prompt
 
 
+# noinspection SqlResolve
 class DbConn:
     """
     Class to establish connection to the database server to
